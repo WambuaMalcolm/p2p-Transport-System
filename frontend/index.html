@@ -1,51 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Point-to-Point Transport System</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="logo">P2P Transport</div>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="register.html">Register</a></li>
-          <li><a href="profile.html">Profile</a></li>
+     <link rel="stylesheet" href="css/styles.css" />    
+</head>
+<body>
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    <!-- Floating Help Button -->
+    <button class="help-btn" id="helpBtn" title="Help & Support">
+      <span class="material-icons">help_outline</span>
+    </button>
+
+    <!-- Help Modal -->
+    <div class="help-modal" id="helpModal">
+      <div class="help-modal-content">
+        <span class="close" id="closeHelp">&times;</span>
+        <h2>Help & Support</h2>
+        <h3>Frequently Asked Questions</h3>
+        <ul class="faq-list">
+          <li><strong>How do I book a ride?</strong><br>Click the "Get Started" button and fill out the booking form.</li>
+          <li><strong>How do I view my bookings?</strong><br>Login and go to your Profile page.</li>
+          <li><strong>Who can I contact for urgent support?</strong><br>Use the form below or email support@p2p-transport.com.</li>
         </ul>
-      </nav>
+        <h3>Contact Us</h3>
+        <form class="help-form">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="How can we help you?" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+        <div class="help-success" style="display:none; color:green; margin-top:1rem;">Thank you! We'll get back to you soon.</div>
+      </div>
+    </div>
+
+    <div class="background-slideshow">
+        <img src="../image1.jpg" class="active" alt="Background 1">
+        <img src="../image2.jpg" alt="Background 2">
+        <img src="../image3.jpg" alt="Background 3">
+        <img src="../image4.jpg" alt="Background 4">
+        <img src="../image5.jpg" alt="Background 5">
+        <img src="../image6.jpg" alt="Background 6">
+        <img src="../image7.jpg" alt="Background 7">
+    </div>
+
+    <header class="navbar">
+        <div class="logo">P2P Transport</div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Fast & Reliable Transport Booking</h1>
-        <p>
-          Book your ride with ease using our Point-to-Point transport system.
-        </p>
-        <a href="booking.html" class="btn">Get Started</a>
-      </div>
+    <section class="hero fade-in">
+        <div class="hero-content">
+            <h1>Fast & Reliable Transport Booking</h1>
+            <p>
+                Book your ride with ease using our Point-to-Point transport system.
+            </p>
+            <a href="booking.html" class="btn">Get Started</a>
+        </div>
     </section>
 
-    <section class="features">
-      <div class="feature">
-        <h3>Secure Login</h3>
-        <p>Your data is safe with us using secure authentication methods.</p>
-      </div>
-      <div class="feature">
-        <h3>Real-Time Booking</h3>
-        <p>Instant confirmation and accurate ride availability.</p>
-      </div>
-      <div class="feature">
-        <h3>Admin Dashboard</h3>
-        <p>Manage users, rides, and analytics from a central place.</p>
-      </div>
+    <section class="features fade-in">
+        <div class="feature">
+            <h3>Secure Login</h3>
+            <p>Your data is safe with us using secure authentication methods.</p>
+        </div>
+        <div class="feature">
+            <h3>Real-Time Booking</h3>
+            <p>Instant confirmation and accurate ride availability.</p>
+        </div>
+        <div class="feature">
+            <h3>Admin Dashboard</h3>
+            <p>Manage users, rides, and analytics from a central place.</p>
+        </div>
     </section>
 
-    <footer class="footer">
-      <p>&copy; 2025 P2P Transport. All rights reserved.</p>
+    <footer class="footer fade-in">
+        <p>&copy; 2025 P2P Transport. All rights reserved.</p>
     </footer>
-  </body>
+
+    <script>
+    // Hamburger menu logic
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navbar = document.querySelector('.navbar');
+    hamburgerBtn.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      navbar.classList.toggle('open');
+    });
+    // Close menu on nav link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navbar.classList.remove('open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+    // Highlight active nav link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      if (window.location.pathname.endsWith(link.getAttribute('href')) ||
+          (link.getAttribute('href') === 'index.html' && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html')))) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+    // Help Modal Logic
+    const helpBtn = document.getElementById('helpBtn');
+    const helpModal = document.getElementById('helpModal');
+    const closeHelp = document.getElementById('closeHelp');
+    helpBtn.onclick = () => helpModal.style.display = 'block';
+    closeHelp.onclick = () => helpModal.style.display = 'none';
+    window.onclick = function(event) {
+      if (event.target === helpModal) helpModal.style.display = 'none';
+    };
+    document.querySelector('.help-form').onsubmit = function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.querySelector('.help-success').style.display = 'block';
+      showToast('Your message was sent!');
+    // Toast Notification Function
+    function showToast(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      container.appendChild(toast);
+      toast.onclick = () => toast.remove();
+      setTimeout(() => toast.remove(), 3000);
+    }
+    };
+    // Simple background slideshow
+    const slides = document.querySelectorAll('.background-slideshow img');
+    let current = 0;
+    setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 4000);
+
+    // Fade-in on scroll
+    function revealOnScroll() {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', revealOnScroll);
+
+    // Button Ripple Effect
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const circle = document.createElement('span');
+        circle.className = 'ripple';
+        const rect = btn.getBoundingClientRect();
+        circle.style.left = (e.clientX - rect.left) + 'px';
+        circle.style.top = (e.clientY - rect.top) + 'px';
+        btn.appendChild(circle);
+        setTimeout(() => circle.remove(), 600);
+      });
+    });
+    </script>
+</body>
 </html>
