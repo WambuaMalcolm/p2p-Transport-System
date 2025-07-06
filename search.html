@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Booking - Search Routes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .search-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .search-title {
+            color: #0d6efd;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .result-card {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .transport-icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        .bus-icon { color: #28a745; }
+        .train-icon { color: #dc3545; }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <h2 class="search-title"><i class="fas fa-search"></i> Find Your Transportation</h2>
+            <form id="searchForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="from" class="form-label">From</label>
+                        <input type="text" class="form-control" id="from" placeholder="Departure city" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="to" class="form-label">To</label>
+                        <input type="text" class="form-control" id="to" placeholder="Destination city" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="date" class="form-label">Travel Date</label>
+                        <input type="date" class="form-control" id="date" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="type" class="form-label">Transport Type</label>
+                        <select class="form-select" id="type">
+                            <option value="">All Types</option>
+                            <option value="bus">Bus</option>
+                            <option value="train">Train</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-search"></i> Search Routes
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="loadingSpinner" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Searching for available routes...</p>
+        </div>
+
+        <div id="searchResults"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('date').valueAsDate = tomorrow;
+
+            // Handle form submission
+            document.getElementById('searchForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                searchRoutes();
+            });
+        });
+
+        function searchRoutes() {
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const date = document.getElementById('date').value;
+            const type = document.getElementById('type').value;
+
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('searchResults').innerHTML = '';
+
+            // Make AJAX request to search.php
+            fetch(`search.php?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&type=${encodeURIComponent(type)}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayResults(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('searchResults').innerHTML = `
+                        <div class="alert alert-danger">
+                            An error occurred while searching. Please try again.
+                        </div>
+                    `;
+                })
+                .finally(() => {
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                });
+        }
+
+        function displayResults(routes) {
+            const resultsContainer = document.getElementById('searchResults');
+
+            if (routes.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-circle fa-3x mb-3"></i>
+                        <h3>No routes found</h3>
+                        <p>Try adjusting your search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<h3 class="mb-4">Available Routes</h3>';
+
+            routes.forEach(route => {
+                // Format date and time
+                const departureDate = new Date(route.departure_date);
+                const formattedDate = departureDate.toLocaleDateString('en-US', { 
+                    weekday: 'short', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+
+                // Get appropriate icon for transport type
+                let iconClass = '';
+                if (route.transport_type === 'bus') {
+                    iconClass = 'bus-icon fas fa-bus';
+                } else if (route.transport_type === 'train') {
+                    iconClass = 'train-icon fas fa-train';
+                }
+
+                html += `
+                    <div class="card result-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="card-title">
+                                        <i class="${iconClass} transport-icon"></i>
+                                        ${route.departure_city} to ${route.arrival_city}
+                                    </h5>
+                                    <p class="card-text">
+                                        <i class="far fa-calendar-alt"></i> ${formattedDate}
+                                        <span class="mx-2">|</span>
+                                        <i class="far fa-clock"></i> ${route.departure_time}
+                                        <span class="mx-2">|</span>
+                                        <i class="fas fa-chair"></i> ${route.available_seats} seats available
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-md-end">
+                                    <h4 class="text-primary">$${parseFloat(route.price).toFixed(2)}</h4>
+                                    <button class="btn btn-success book-btn" data-route-id="${route.id}">
+                                        <i class="fas fa-ticket-alt"></i> Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = html;
+
+            // Add event listeners to book buttons
+            document.querySelectorAll('.book-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const routeId = this.getAttribute('data-route-id');
+                    bookRoute(routeId);
+                });
+            });
+        }
+
+        function bookRoute(routeId) {
+            // In a real application, you would redirect to a booking page or show a modal
+            alert(`Booking route #${routeId}. In a real application, this would redirect to a booking page.`);
+            // window.location.href = `book.php?route_id=${routeId}`;
+        }
+    </script>
+</body>
+</html>

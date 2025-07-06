@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Booking System - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #2980b9;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f6fa;
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar Styles */
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: var(--secondary-color);
+            color: white;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: var(--primary-color);
+        }
+        
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+        
+        #sidebar ul li a {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            display: block;
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        #sidebar ul li a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        #sidebar ul li.active > a {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        #sidebar ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Content Styles */
+        #content {
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transition: all 0.3s;
+            padding-top: var(--header-height);
+        }
+        
+        /* Header Styles */
+        #header {
+            height: var(--header-height);
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: calc(100% - var(--sidebar-width));
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            padding: 20px;
+        }
+        
+        /* Card Styles */
+        .dashboard-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            border: none;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .card-routes { border-left: 5px solid var(--primary-color); }
+        .card-bookings { border-left: 5px solid var(--success-color); }
+        .card-vehicles { border-left: 5px solid var(--warning-color); }
+        .card-users { border-left: 5px solid var(--danger-color); }
+        
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px;
+            }
+            
+            #sidebar.active {
+                margin-left: 0;
+            }
+            
+            #content {
+                width: 100%;
+            }
+            
+            #content.active {
+                width: calc(100% - 250px);
+                right: 250px;
+            }
+            
+            #header {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Point to point Booking</h3>
+            <strong>P2P</strong>
+        </div>
+        
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="#dashboard" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#routes" data-section="routes">
+                    <i class="fas fa-route"></i>
+                    Manage Routes
+                </a>
+            </li>
+            <li>
+                <a href="#bookings" data-section="bookings">
+                    <i class="fas fa-ticket-alt"></i>
+                    Manage Bookings
+                </a>
+            </li>
+            <li>
+                <a href="#vehicles" data-section="vehicles">
+                    <i class="fas fa-bus"></i>
+                    Manage Vehicles
+                </a>
+            </li>
+            <li>
+                <a href="#users" data-section="users">
+                    <i class="fas fa-users"></i>
+                    Manage Users
+                </a>
+            </li>
+            <li>
+                <a href="#reports" data-section="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    Reports
+                </a>
+            </li>
+            <li>
+                <a href="#settings" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
+        
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="admin_logout.php" class="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+        <!-- Header -->
+        <nav id="header">
+            <div>
+                <button type="button" id="sidebarCollapse" class="btn btn-primary d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="user-info">
+                <span class="me-2"><i class="fas fa-user-circle"></i> Admin User</span>
+                <span class="badge bg-success">Administrator</span>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section (default view) -->
+            <section id="dashboard-section">
+                <h2 class="mb-4"><i class="fas fa-tachometer-alt me-2"></i>Dashboard Overview</h2>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card dashboard-card card-routes">
+                            <div class="card-body text-center">
+                                <i class="fas fa-route card-icon text-primary"></i>
+                                <h5 class="card-title">Total Routes</h5>
+                                <h2 class="card-text" id="total-routes">42</h2>
+                                <a href="#routes" class="btn btn-sm btn-primary">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card dashboard-card card-bookings">
+                            <div class="card-body text-center">
+                                <i class="fas fa-ticket-alt card-icon text-success"></i>
+                                <h5 class="card-title">Today's Bookings</h5>
+                                <h2 class="card-text" id="today-bookings">18</h2>
+                                <a href="#bookings" class="btn btn-sm btn-success">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card dashboard-card card-vehicles">
+                            <div class="card-body text-center">
+                                <i class="fas fa-bus card-icon text-warning"></i>
+                                <h5 class="card-title">Available Vehicles</h5>
+                                <h2 class="card-text" id="available-vehicles">15</h2>
+                                <a href="#vehicles" class="btn btn-sm btn-warning">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="card dashboard-card card-users">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users card-icon text-danger"></i>
+                                <h5 class="card-title">Registered Users</h5>
+                                <h2 class="card-text" id="registered-users">256</h2>
+                                <a href="#users" class="btn btn-sm btn-danger">Manage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Recent Bookings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Booking ID</th>
+                                                <th>Route</th>
+                                                <th>User</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recent-bookings">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>System Alerts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-warning">
+                                    <strong>3 Vehicles</strong> need maintenance
+                                </div>
+                                <div class="alert alert-danger">
+                                    <strong>2 Routes</strong> have no available seats
+                                </div>
+                                <div class="alert alert-info">
+                                    <strong>System update</strong> scheduled for tonight
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Routes Section -->
+            <section id="routes-section" class="d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-route me-2"></i>Manage Routes</h2>
+                    <button class="btn btn-primary" id="add-route-btn">
+                        <i class="fas fa-plus me-1"></i> Add New Route
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Departure</th>
+                                        <th>Arrival</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Seats</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="routes-table-body">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Bookings Section -->
+            <section id="bookings-section" class="d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-ticket-alt me-2"></i>Manage Bookings</h2>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-secondary">Today</button>
+                        <button class="btn btn-outline-secondary">This Week</button>
+                        <button class="btn btn-outline-secondary">All</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Booking ID</th>
+                                        <th>User</th>
+                                        <th>Route</th>
+                                        <th>Date</th>
+                                        <th>Seats</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookings-table-body">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Vehicles Section -->
+            <section id="vehicles-section" class="d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-bus me-2"></i>Manage Vehicles</h2>
+                    <button class="btn btn-primary" id="add-vehicle-btn">
+                        <i class="fas fa-plus me-1"></i> Add New Vehicle
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Registration</th>
+                                        <th>Type</th>
+                                        <th>Capacity</th>
+                                        <th>Status</th>
+                                        <th>Last Maintenance</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vehicles-table-body">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Users Section -->
+            <section id="users-section" class="d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-users me-2"></i>Manage Users</h2>
+                    <button class="btn btn-primary" id="add-user-btn">
+                        <i class="fas fa-plus me-1"></i> Add New User
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Registered</th>
+                                        <th>Bookings</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Reports Section -->
+            <section id="reports-section" class="d-none">
+                <h2 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Reports</h2>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Booking Trends</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="bookingsChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">Revenue by Route</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="revenueChart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Generate Custom Report</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="report-form">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Report Type</label>
+                                        <select class="form-select" id="report-type">
+                                            <option value="bookings">Bookings Report</option>
+                                            <option value="revenue">Revenue Report</option>
+                                            <option value="vehicles">Vehicle Utilization</option>
+                                            <option value="users">User Activity</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Date From</label>
+                                        <input type="date" class="form-control" id="date-from">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Date To</label>
+                                        <input type="date" class="form-control" id="date-to">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-download me-1"></i> Generate Report
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Settings Section -->
+            <section id="settings-section" class="d-none">
+                <h2 class="mb-4"><i class="fas fa-cog me-2"></i>System Settings</h2>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="settingsTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">General</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab">Payment</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email" type="button" role="tab">Email</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab">Admin Users</button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content mt-3" id="settingsTabsContent">
+                            <div class="tab-pane fade show active" id="general" role="tabpanel">
+                                <form id="general-settings-form">
+                                    <div class="mb-3">
+                                        <label class="form-label">System Name</label>
+                                        <input type="text" class="form-control" name="system_name" value="Transport Booking System">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Default Timezone</label>
+                                        <select class="form-select" name="timezone">
+                                            <option value="UTC">UTC</option>
+                                            <option value="EST" selected>Eastern Time (EST)</option>
+                                            <option value="PST">Pacific Time (PST)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Maintenance Mode</label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="maintenance-mode" name="maintenance_mode">
+                                            <label class="form-check-label" for="maintenance-mode">Enable Maintenance Mode</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="payment" role="tabpanel">
+                                <form id="payment-settings-form">
+                                    <div class="mb-3">
+                                        <label class="form-label">Currency</label>
+                                        <select class="form-select" name="currency">
+                                            <option value="USD" selected>US Dollar (USD)</option>
+                                            <option value="EUR">Euro (EUR)</option>
+                                            <option value="GBP">British Pound (GBP)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Methods</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="credit-card" name="payment_methods[]" value="credit_card" checked>
+                                            <label class="form-check-label" for="credit-card">Credit Card</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="paypal" name="payment_methods[]" value="paypal" checked>
+                                            <label class="form-check-label" for="paypal">PayPal</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="bank-transfer" name="payment_methods[]" value="bank_transfer">
+                                            <label class="form-check-label" for="bank-transfer">Bank Transfer</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Gateway</label>
+                                        <select class="form-select" name="payment_gateway">
+                                            <option value="stripe" selected>Stripe</option>
+                                            <option value="paypal">PayPal</option>
+                                            <option value="authorize">Authorize.net</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="email" role="tabpanel">
+                                <form id="email-settings-form">
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Host</label>
+                                        <input type="text" class="form-control" name="smtp_host" value="smtp.example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Port</label>
+                                        <input type="number" class="form-control" name="smtp_port" value="587">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Username</label>
+                                        <input type="text" class="form-control" name="smtp_username" value="admin@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SMTP Password</label>
+                                        <input type="password" class="form-control" name="smtp_password" placeholder="Enter password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">From Email</label>
+                                        <input type="email" class="form-control" name="from_email" value="noreply@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">From Name</label>
+                                        <input type="text" class="form-control" name="from_name" value="Transport Booking System">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="admin" role="tabpanel">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5>Admin Users</h5>
+                                    <button class="btn btn-primary btn-sm" id="add-admin-btn">
+                                        <i class="fas fa-plus me-1"></i> Add Admin
+                                    </button>
+                                </div>
+                                
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Last Login</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="admin-users-table">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Add Route Modal -->
+    <div class="modal fade" id="addRouteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Route</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="add-route-form" action="manage_routes.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Departure City</label>
+                                    <input type="text" class="form-control" name="departure_city" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Arrival City</label>
+                                    <input type="text" class="form-control" name="arrival_city" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Departure Date</label>
+                                    <input type="date" class="form-control" name="departure_date" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Departure Time</label>
+                                    <input type="time" class="form-control" name="departure_time" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Transport Type</label>
+                                    <select class="form-select" name="transport_type" required>
+                                        <option value="bus">Bus</option>
+                                        <option value="train">Train</option>
+                                        <option value="flight">Flight</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" step="0.01" class="form-control" name="price" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Available Seats</label>
+                                    <input type="number" class="form-control" name="available_seats" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Vehicle</label>
+                                    <select class="form-select" name="vehicle_id" required>
+                                        <option value="1">Bus-001</option>
+                                        <option value="2">Bus-002</option>
+                                        <option value="3">Train-001</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" name="add_route">Add Route</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar toggle for mobile
+            document.getElementById('sidebarCollapse').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('active');
+                document.getElementById('content').classList.toggle('active');
+            });
+            
+            // Navigation between sections
+            document.querySelectorAll('#sidebar a[data-section]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hide all sections
+                    document.querySelectorAll('section').forEach(section => {
+                        section.classList.add('d-none');
+                    });
+                    
+                    // Show selected section
+                    const sectionId = this.getAttribute('data-section') + '-section';
+                    document.getElementById(sectionId).classList.remove('d-none');
+                    
+                    // Update active link in sidebar
+                    document.querySelectorAll('#sidebar li').forEach(li => {
+                        li.classList.remove('active');
+                    });
+                    this.parentElement.classList.add('active');
+                    
+                    // Load data for the section if needed
+                    loadSectionData(this.getAttribute('data-section'));
+                    
+                    // Close sidebar on mobile after selection
+                    if (window.innerWidth < 768) {
+                        document.getElementById('sidebar').classList.remove('active');
+                        document.getElementById('content').classList.remove('active');
+                    }
+                });
+            });
+            
+            // Initialize dashboard as default view
+            document.querySelector('#sidebar a[data-section="dashboard"]').click();
+            
+            // Add Route button click handler
+            document.getElementById('add-route-btn').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('addRouteModal'));
+                modal.show();
+            });
+            
+            // Initialize charts on reports page
+            function initCharts() {
+                // Bookings Chart
+                const bookingsCtx = document.getElementById('bookingsChart').getContext('2d');
+                const bookingsChart = new Chart(bookingsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                        datasets: [{
+                            label: 'Bookings',
+                            data: [65, 59, 80, 81, 56, 55, 40],
+                            backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                
+                // Revenue Chart
+                const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+                const revenueChart = new Chart(revenueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['NYC to Boston', 'LA to SF', 'Chicago to Detroit', 'Miami to Orlando', 'Seattle to Portland'],
+                        datasets: [{
+                            label: 'Revenue ($)',
+                            data: [12500, 9800, 7400, 11200, 8600],
+                            backgroundColor: [
+                                'rgba(46, 204, 113, 0.7)',
+                                'rgba(52, 152, 219, 0.7)',
+                                'rgba(155, 89, 182, 0.7)',
+                                'rgba(52, 73, 94, 0.7)',
+                                'rgba(241, 196, 15, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(46, 204, 113, 1)',
+                                'rgba(52, 152, 219, 1)',
+                                'rgba(155, 89, 182, 1)',
+                                'rgba(52, 73, 94, 1)',
+                                'rgba(241, 196, 15, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Load data for a specific section
+            function loadSectionData(section) {
+                // In a real application, you would fetch data from your PHP backend
+                // Here we're just simulating with static data
+                
+                switch(section) {
+                    case 'dashboard':
+                        // Update dashboard stats
+                        document.getElementById('total-routes').textContent = '42';
+                        document.getElementById('today-bookings').textContent = '18';
+                        document.getElementById('available-vehicles').textContent = '15';
+                        document.getElementById('registered-users').textContent = '256';
+                        
+                        // Populate recent bookings
+                        const recentBookings = [
+                            {id: 'BK-1001', route: 'NYC to Boston', user: 'John Doe', date: '2023-06-15', status: 'Confirmed'},
+                            {id: 'BK-1002', route: 'LA to SF', user: 'Jane Smith', date: '2023-06-15', status: 'Pending'},
+                            {id: 'BK-1003', route: 'Chicago to Detroit', user: 'Mike Johnson', date: '2023-06-14', status: 'Confirmed'},
+                            {id: 'BK-1004', route: 'Miami to Orlando', user: 'Sarah Williams', date: '2023-06-14', status: 'Cancelled'},
+                            {id: 'BK-1005', route: 'Seattle to Portland', user: 'David Brown', date: '2023-06-13', status: 'Confirmed'}
+                        ];
+                        
+                        let bookingsHtml = '';
+                        recentBookings.forEach(booking => {
+                            let statusClass = '';
+                            if (booking.status === 'Confirmed') statusClass = 'text-success';
+                            else if (booking.status === 'Pending') statusClass = 'text-warning';
+                            else if (booking.status === 'Cancelled') statusClass = 'text-danger';
+                            
+                            bookingsHtml += `
+                                <tr>
+                                    <td>${booking.id}</td>
+                                    <td>${booking.route}</td>
+                                    <td>${booking.user}</td>
+                                    <td>${booking.date}</td>
+                                    <td class="${statusClass}">${booking.status}</td>
+                                </tr>
+                            `;
+                        });
+                        
+                        document.getElementById('recent-bookings').innerHTML = bookingsHtml;
+                        break;
+                        
+                    case 'routes':
+                        // Sample routes data
+                        const routes = [
+                            {id: 1, departure: 'New York', arrival: 'Boston', date: '2023-06-20', time: '08:00', type: 'Bus', price: 45.00, seats: 12, vehicle: 'Bus-001'},
+                            {id: 2, departure: 'Los Angeles', arrival: 'San Francisco', date: '2023-06-20', time: '09:30', type: 'Bus', price: 55.00, seats: 8, vehicle: 'Bus-002'},
+                            {id: 3, departure: 'Chicago', arrival: 'Detroit', date: '2023-06-21', time: '07:15', type: 'Train', price: 65.00, seats: 24, vehicle: 'Train-001'},
+                            {id: 4, departure: 'Miami', arrival: 'Orlando', date: '2023-06-21', time: '10:45', type: 'Bus', price: 35.00, seats: 0, vehicle: 'Bus-003'},
+                            {id: 5, departure: 'Seattle', arrival: 'Portland', date: '2023-06-22', time: '12:30', type: 'Train', price: 40.00, seats: 18, vehicle: 'Train-002'}
+                        ];
+                        
+                        let routesHtml = '';
+                        routes.forEach(route => {
+                            routesHtml += `
+                                <tr>
+                                    <td>${route.id}</td>
+                                    <td>${route.departure}</td>
+                                    <td>${route.arrival}</td>
+                                    <td>${route.date}</td>
+                                    <td>${route.time}</td>
+                                    <td>${route.type}</td>
+                                    <td>$${route.price.toFixed(2)}</td>
+                                    <td>${route.seats}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info me-1">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        
+                        document.getElementById('routes-table-body').innerHTML = routesHtml;
+                        break;
+                        
+                    case 'bookings':
+                        // Sample bookings data
+                        const bookings = [
+                            {id: 'BK-1001', user: 'John Doe', route: 'NYC to Boston', date: '2023-06-15', seats: 2, total: 90.00, status: 'Confirmed'},
+                            {id: 'BK-1002', user: 'Jane Smith', route: 'LA to SF', date: '2023-06-15', seats: 1, total: 55.00, status: 'Pending'},
+                            {id: 'BK-1003', user: 'Mike Johnson', route: 'Chicago to Detroit', date: '2023-06-14', seats: 4, total: 260.00, status: 'Confirmed'},
+                            {id: 'BK-1004', user: 'Sarah Williams', route: 'Miami to Orlando', date: '2023-06-14', seats: 3, total: 105.00, status: 'Cancelled'},
+                            {id: 'BK-1005', user: 'David Brown', route: 'Seattle to Portland', date: '2023-06-13', seats: 1, total: 40.00, status: 'Confirmed'}
+                        ];
+                        
+                        let bookingsTableHtml = '';
+                        bookings.forEach(booking => {
+                            let statusClass = '';
+                            if (booking.status === 'Confirmed') statusClass = 'badge bg-success';
+                            else if (booking.status === 'Pending') statusClass = 'badge bg-warning text-dark';
+                            else if (booking.status === 'Cancelled') statusClass = 'badge bg-danger';
+                            
+                            bookingsTableHtml += `
+                                <tr>
+                                    <td>${booking.id}</td>
+                                    <td>${booking.user}</td>
+                                    <td>${booking.route}</td>
+                                    <td>${booking.date}</td>
+                                    <td>${booking.seats}</td>
+                                    <td>$${booking.total.toFixed(2)}</td>
+                                    <td><span class="${statusClass}">${booking.status}</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info me-1">View</button>
+                                        <button class="btn btn-sm btn-danger">Cancel</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        
+                        document.getElementById('bookings-table-body').innerHTML = bookingsTableHtml;
+                        break;
+                        
+                    case 'vehicles':
+                        // Sample vehicles data
+                        const vehicles = [
+                            {id: 1, reg: 'BUS-001', type: 'Bus', capacity: 50, status: 'Active', last_maintenance: '2023-05-20'},
+                            {id: 2, reg: 'BUS-002', type: 'Bus', capacity: 50, status: 'Active', last_maintenance: '2023-05-25'},
+                            {id: 3, reg: 'TRAIN-001', type: 'Train', capacity: 200, status: 'Active', last_maintenance: '2023-04-15'},
+                            {id: 4, reg: 'BUS-003', type: 'Bus', capacity: 50, status: 'Maintenance', last_maintenance: '2023-06-10'},
+                            {id: 5, reg: 'TRAIN-002', type: 'Train', capacity: 200, status: 'Active', last_maintenance: '2023-03-30'}
+                        ];
+                        
+                        let vehiclesHtml = '';
+                        vehicles.forEach(vehicle => {
+                            let statusClass = '';
+                            if (vehicle.status === 'Active') statusClass = 'badge bg-success';
+                            else if (vehicle.status === 'Maintenance') statusClass = 'badge bg-warning text-dark';
+                            
+                            vehiclesHtml += `
+                                <tr>
+                                    <td>${vehicle.id}</td>
+                                    <td>${vehicle.reg}</td>
+                                    <td>${vehicle.type}</td>
+                                    <td>${vehicle.capacity}</td>
+                                    <td><span class="${statusClass}">${vehicle.status}</span></td>
+                                    <td>${vehicle.last_maintenance}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info me-1">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        
+                        document.getElementById('vehicles-table-body').innerHTML = vehiclesHtml;
+                        break;
+                        
+                    case 'users':
+                        // Sample users data
+                        const users = [
+                            {id: 1, name: 'John Doe', email: 'john@example.com', phone: '555-0101', registered: '2023-01-15', bookings: 5},
+                            {id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '555-0102', registered: '2023-02-20', bookings: 3},
+                            {id: 3, name: 'Mike Johnson', email: 'mike@example.com', phone: '555-0103', registered: '2023-03-10', bookings: 7},
+                            {id: 4, name: 'Sarah Williams', email: 'sarah@example.com', phone: '555-0104', registered: '2023-04-05', bookings: 2},
+                            {id: 5, name: 'David Brown', email: 'david@example.com', phone: '555-0105', registered: '2023-05-12', bookings: 4}
+                        ];
+                        
+                        let usersHtml = '';
+                        users.forEach(user => {
+                            usersHtml += `
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>${user.name}</td>
+                                    <td>${user.email}</td>
+                                    <td>${user.phone}</td>
+                                    <td>${user.registered}</td>
+                                    <td>${user.bookings}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info me-1">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        
+                        document.getElementById('users-table-body').innerHTML = usersHtml;
+                        break;
+                        
+                    case 'reports':
+                        initCharts();
+                        break;
+                        
+                    case 'settings':
+                        // Sample admin users data
+                        const adminUsers = [
+                            {username: 'admin1', name: 'Super Admin', email: 'admin1@example.com', last_login: '2023-06-15 09:30'},
+                            {username: 'admin2', name: 'Route Manager', email: 'routes@example.com', last_login: '2023-06-14 14:45'},
+                            {username: 'admin3', name: 'Booking Manager', email: 'bookings@example.com', last_login: '2023-06-13 11:20'}
+                        ];
+                        
+                        let adminUsersHtml = '';
+                        adminUsers.forEach(admin => {
+                            adminUsersHtml += `
+                                <tr>
+                                    <td>${admin.username}</td>
+                                    <td>${admin.name}</td>
+                                    <td>${admin.email}</td>
+                                    <td>${admin.last_login}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info me-1">Edit</button>
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                        
+                        document.getElementById('admin-users-table').innerHTML = adminUsersHtml;
+                        break;
+                }
+            }
+            
+            // Form submissions would be handled here in a real application
+            document.getElementById('add-route-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('In a real application, this would submit to manage_routes.php');
+                // You would typically use fetch() to submit the form data to the PHP backend
+            });
+            
+            // Other form submissions would be similar
+        });
+    </script>
+</body>
+</html>
