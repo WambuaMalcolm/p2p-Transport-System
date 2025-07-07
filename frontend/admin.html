@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - P2P Transport</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">P2P Transport - Admin</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html"><span class="material-icons">home</span><span>Home</span></a></li>
+        <li><a href="#" id="logoutBtn"><span class="material-icons">logout</span><span>Logout</span></a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="admin-container">
+    <h1>Admin Dashboard</h1>
+    <section class="admin-section">
+      <h2>User Management</h2>
+      <input type="text" id="userSearchInput" placeholder="Search users...">
+      <div id="usersList" class="data-list"></div>
+    </section>
+    <section class="admin-section">
+      <h2>Booking Management</h2>
+      <input type="text" id="bookingSearchInput" placeholder="Search bookings...">
+      <div id="bookingsList" class="data-list"></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <p>&copy; 2025 P2P Transport. All rights reserved.</p>
+  </footer>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../backend/check_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success || !data.is_admin) {
+                    window.location.href = 'login.html'; // Redirect to login if not admin or not logged in
+                }
+            })
+            .catch(error => {
+                console.error('Error checking session:', error);
+                window.location.href = 'login.html';
+            });
+    });
+  </script>
+</body>
+</html>

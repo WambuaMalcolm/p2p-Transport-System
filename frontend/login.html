@@ -11,13 +11,13 @@
 </head>
 <body>
   <div class="background-slideshow">
-    <img src="../image1.jpg" class="active" alt="Background 1">
-    <img src="../image2.jpg" alt="Background 2">
-    <img src="../image3.jpg" alt="Background 3">
-    <img src="../image4.jpg" alt="Background 4">
-    <img src="../image5.jpg" alt="Background 5">
-    <img src="../image6.jpg" alt="Background 6">
-    <img src="../image7.jpg" alt="Background 7">
+    <img src="images/image1.jpg" class="active" alt="Background 1">
+    <img src="images/image2.jpg" alt="Background 2">
+    <img src="images/image3.jpg" alt="Background 3">
+    <img src="images/image4.jpg" alt="Background 4">
+    <img src="images/image5.jpg" alt="Background 5">
+    <img src="images/image6.jpg" alt="Background 6">
+    <img src="images/image7.jpg" alt="Background 7">
   </div>
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
@@ -54,21 +54,19 @@
     </button>
     <nav>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="profile.html">Profile</a></li>
+        <li><a href="index.html"><span class="material-icons">home</span><span>Home</span></a></li>
+        <li><a href="register.html"><span class="material-icons">person_add</span><span>Register</span></a></li>
+        <li><a href="profile.html"><span class="material-icons">person</span><span>Profile</span></a></li>
       </ul>
     </nav>
   </header>
   <main class="form-container fade-in">
     <h2>Login to Your Account</h2>
-    <form action="login.php" method="POST" class="form">
-      <label for="UserN">User name</label>
-      <input type="text" id="UserN" name="UserN" required maxlength="30">
+    <form id="loginForm" class="form">
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required placeholder="Username@gmail.com">
+      <input type="email" id="email" name="email" required placeholder="you@example.com">
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required minlength="8" maxlength="20">
+      <input type="password" id="password" name="password" required minlength="8">
       <button type="submit" class="btn">Login</button>
     </form>
     <p class="form-footer">
@@ -78,85 +76,7 @@
   <footer class="footer fade-in">
     <p>&copy; 2025 P2P Transport. All rights reserved.</p>
   </footer>
-  <script>
-    // Hamburger menu logic
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const navbar = document.querySelector('.navbar');
-    hamburgerBtn.addEventListener('click', function() {
-      const expanded = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', !expanded);
-      navbar.classList.toggle('open');
-    });
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navbar.classList.remove('open');
-        hamburgerBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-    // Highlight active nav link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      if (window.location.pathname.endsWith(link.getAttribute('href')) ||
-          (link.getAttribute('href') === 'index.html' && (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html')))) {
-        link.classList.add('active');
-        link.setAttribute('aria-current', 'page');
-      }
-    });
-    // Help Modal Logic
-    const helpBtn = document.getElementById('helpBtn');
-    const helpModal = document.getElementById('helpModal');
-    const closeHelp = document.getElementById('closeHelp');
-    helpBtn.onclick = () => helpModal.style.display = 'block';
-    closeHelp.onclick = () => helpModal.style.display = 'none';
-    window.onclick = function(event) {
-      if (event.target === helpModal) helpModal.style.display = 'none';
-    };
-    document.querySelector('.help-form').onsubmit = function(e) {
-      e.preventDefault();
-      this.style.display = 'none';
-      document.querySelector('.help-success').style.display = 'block';
-      showToast('Your message was sent!');
-    };
-    // Toast Notification Function
-    function showToast(message) {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.textContent = message;
-      container.appendChild(toast);
-      toast.onclick = () => toast.remove();
-      setTimeout(() => toast.remove(), 3000);
-    }
-    // Simple background slideshow
-    const slides = document.querySelectorAll('.background-slideshow img');
-    let current = 0;
-    setInterval(() => {
-        slides[current].classList.remove('active');
-        current = (current + 1) % slides.length;
-        slides[current].classList.add('active');
-    }, 4000);
-    // Fade-in on scroll
-    function revealOnScroll() {
-      document.querySelectorAll('.fade-in').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 60) {
-          el.classList.add('visible');
-        }
-      });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('DOMContentLoaded', revealOnScroll);
-    // Button Ripple Effect
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        const circle = document.createElement('span');
-        circle.className = 'ripple';
-        const rect = btn.getBoundingClientRect();
-        circle.style.left = (e.clientX - rect.left) + 'px';
-        circle.style.top = (e.clientY - rect.top) + 'px';
-        btn.appendChild(circle);
-        setTimeout(() => circle.remove(), 600);
-      });
-    });
-  </script>
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>

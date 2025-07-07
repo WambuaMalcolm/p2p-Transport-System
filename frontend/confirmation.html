@@ -8,26 +8,68 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+    <div class="background-slideshow">
+        <img src="images/image1.jpg" class="active" alt="Background 1">
+        <img src="images/image2.jpg" alt="Background 2">
+        <img src="images/image3.jpg" alt="Background 3">
+        <img src="images/image4.jpg" alt="Background 4">
+        <img src="images/image5.jpg" alt="Background 5">
+        <img src="images/image6.jpg" alt="Background 6">
+        <img src="images/image7.jpg" alt="Background 7">
+    </div>
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    <!-- Floating Help Button -->
+    <button class="help-btn" id="helpBtn" title="Help & Support">
+      <span class="material-icons">help_outline</span>
+    </button>
+    <!-- Help Modal -->
+    <div class="help-modal" id="helpModal">
+      <div class="help-modal-content">
+        <span class="close" id="closeHelp">&times;</span>
+        <h2>Help & Support</h2>
+        <h3>Frequently Asked Questions</h3>
+        <ul class="faq-list">
+          <li><strong>How do I book a ride?</strong><br>Click the "Get Started" button and fill out the booking form.</li>
+          <li><strong>How do I view my bookings?</strong><br>Login and go to your Profile page.</li>
+          <li><strong>Who can I contact for urgent support?</strong><br>Use the form below or email support@p2p-transport.com.</li>
+        </ul>
+        <h3>Contact Us</h3>
+        <form class="help-form">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="How can we help you?" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+        <div class="help-success" style="display:none; color:green; margin-top:1rem;">Thank you! We'll get back to you soon.</div>
+      </div>
+    </div>
     <header class="navbar">
       <div class="logo">P2P Transport</div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <nav>
         <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="register.html">Register</a></li>
-          <li><a href="profile.html">Profile</a></li>
+          <li><a href="index.html"><span class="material-icons">home</span><span>Home</span></a></li>
+          <li><a href="login.html"><span class="material-icons">login</span><span>Login</span></a></li>
+          <li><a href="register.html"><span class="material-icons">person_add</span><span>Register</span></a></li>
+          <li><a href="profile.html"><span class="material-icons">person</span><span>Profile</span></a></li>
         </ul>
       </nav>
     </header>
 
-    <div class="form-container">
+    <div class="form-container fade-in">
       <h2>Booking Confirmed!</h2>
       <p>Your ride has been successfully booked. You will receive a confirmation email shortly.</p>
       <a href="index.html" class="btn">Back to Home</a>
     </div>
 
-    <footer class="footer">
+    <footer class="footer fade-in">
       <p>&copy; 2025 P2P Transport. All rights reserved.</p>
     </footer>
+    <script src="js/common.js"></script>
   </body>
 </html>
