@@ -1,368 +1,374 @@
 /* General Body and HTML */
 html,
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    line-height: 1.6;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Background Slideshow */
 .background-slideshow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
 }
 
 .background-slideshow img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
 }
 
 .background-slideshow img.active {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* Toast Notifications */
 .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
 }
 
 .toast {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    opacity: 0.9;
-    cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .toast:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* Help Button */
 .help-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: background-color 0.3s ease;
 }
 
 .help-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* Help Modal */
 .help-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 .help-modal-content {
-    background-color: #fefefe;
-    margin: 10% auto; /* 10% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
+  background-color: #fefefe;
+  margin: 10% auto; /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.help-success {
+  display: none;
+  color: green;
+  margin-top: 1rem;
 }
 
 .help-modal-content h2,
 .help-modal-content h3 {
-    color: #333;
-    margin-bottom: 15px;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .help-modal-content .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .help-modal-content .close:hover,
 .help-modal-content .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .faq-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
 }
 
 .faq-list li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .faq-list strong {
-    color: #007bff;
+  color: #007bff;
 }
 
 .help-form input[type="text"],
 .help-form input[type="email"],
 .help-form textarea {
-    width: calc(100% - 22px); /* Account for padding and border */
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: calc(100% - 22px); /* Account for padding and border */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .help-form textarea {
-    resize: vertical;
-    min-height: 80px;
+  resize: vertical;
+  min-height: 80px;
 }
 
 /* Navbar */
 .navbar {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 250px; /* Increased gap for spacing between logo and nav */
-    align-items: center;
-    color: white;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 250px; /* Increased gap for spacing between logo and nav */
+  align-items: center;
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .navbar .logo {
-    font-family: 'Lobster', cursive;
-    font-size: 1.8em;
-    color: #007bff;
+  font-family: "Lobster", cursive;
+  font-size: 1.8em;
+  color: #007bff;
 }
 
 .nav-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 
 .nav-links li {
-    margin-left: 25px;
+  margin-left: 25px;
 }
 
 .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
 .nav-links a .material-icons {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-    color: #007bff;
+  color: #007bff;
 }
 
 /* Hamburger Menu for Mobile */
 .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    padding: 10px;
-    background: none;
-    border: none;
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  background: none;
+  border: none;
 }
 
 .hamburger span {
-    background: white;
-    border-radius: 3px;
-    height: 3px;
-    margin: 4px 0;
-    width: 25px;
-    transition: all 0.3s ease-in-out;
+  background: white;
+  border-radius: 3px;
+  height: 3px;
+  margin: 4px 0;
+  width: 25px;
+  transition: all 0.3s ease-in-out;
 }
 
 @media (max-width: 768px) {
-    .hamburger {
-        display: flex;
-    }
+  .hamburger {
+    display: flex;
+  }
 
-    .navbar nav {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 60px; /* Adjust based on navbar height */
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.8);
-        padding: 10px 0;
-    }
+  .navbar nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 60px; /* Adjust based on navbar height */
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 0;
+  }
 
-    .navbar nav.open {
-        display: flex;
-    }
+  .navbar nav.open {
+    display: flex;
+  }
 
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-    }
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+  }
 
-    .nav-links li {
-        margin: 10px 0;
-        text-align: center;
-    }
+  .nav-links li {
+    margin: 10px 0;
+    text-align: center;
+  }
 }
 
 /* Hero Section */
 .hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    padding-top: 60px; /* Offset for fixed navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding-top: 60px; /* Offset for fixed navbar */
 }
 
 .hero-content h1 {
-    font-size: 3.5em;
-    margin-bottom: 20px;
-    font-family: 'Lobster', cursive;
-    color: #007bff;
+  font-size: 3.5em;
+  margin-bottom: 20px;
+  font-family: "Lobster", cursive;
+  color: #007bff;
 }
 
 .hero-content p {
-    font-size: 1.3em;
-    margin-bottom: 30px;
+  font-size: 1.3em;
+  margin-bottom: 30px;
 }
 
 /* Buttons */
 .btn {
-    background-color: #007bff;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    position: relative;
-    overflow: hidden;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 .btn .ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
-    animation: ripple-effect 0.6s linear;
-    transform: scale(0);
-    opacity: 1;
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  animation: ripple-effect 0.6s linear;
+  transform: scale(0);
+  opacity: 1;
 }
 
 @keyframes ripple-effect {
-    to {
-        transform: scale(2.5);
-        opacity: 0;
-    }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 
 /* Features Section */
 .features {
-    display: flex;
-    justify-content: space-around;
-    padding: 50px 20px;
-    background-color: rgba(255, 255, 255, 0.9);
-    margin-top: -100px; /* Overlap with hero */
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  padding: 50px 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-top: -100px; /* Overlap with hero */
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .feature {
-    text-align: center;
-    padding: 20px;
-    max-width: 30%;
+  text-align: center;
+  padding: 20px;
+  max-width: 30%;
 }
 
 .feature h3 {
-    color: #007bff;
-    margin-bottom: 10px;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
 /* Forms */
 .form-container {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
-    margin: 100px auto 50px auto; /* Top margin for navbar, auto for center */
-    text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: 100px auto 50px auto; /* Top margin for navbar, auto for center */
+  text-align: center;
 }
 
 .form-container h2 {
-    color: #333;
-    margin-bottom: 30px;
+  color: #333;
+  margin-bottom: 30px;
 }
 
 .form label {
-    display: block;
-    text-align: left;
-    margin-bottom: 8px;
-    font-weight: bold;
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
 .form input[type="text"],
@@ -370,148 +376,148 @@ body {
 .form input[type="password"],
 .form input[type="datetime-local"],
 .form select {
-    width: calc(100% - 22px); /* Adjust for padding and border */
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em;
+  width: calc(100% - 22px); /* Adjust for padding and border */
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
 }
 
 .form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
 }
 
 .form button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .form-footer {
-    margin-top: 20px;
-    font-size: 0.9em;
+  margin-top: 20px;
+  font-size: 0.9em;
 }
 
 .form-footer a {
-    color: #007bff;
-    text-decoration: none;
+  color: #007bff;
+  text-decoration: none;
 }
 
 .form-footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Profile Page */
 .profile-container {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    max-width: 800px;
-    margin: 100px auto 50px auto;
-    text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 100px auto 50px auto;
+  text-align: center;
 }
 
 .profile-container h2 {
-    color: #333;
-    margin-bottom: 30px;
+  color: #333;
+  margin-bottom: 30px;
 }
 
 .profile-info p {
-    font-size: 1.1em;
-    margin-bottom: 10px;
+  font-size: 1.1em;
+  margin-bottom: 10px;
 }
 
 .profile-actions .btn {
-    margin-top: 20px;
-    display: inline-block;
+  margin-top: 20px;
+  display: inline-block;
 }
 
 /* Admin Section (within profile or standalone) */
 .admin-section {
-    margin-top: 40px;
-    text-align: left;
+  margin-top: 40px;
+  text-align: left;
 }
 
 .admin-section h3 {
-    color: #007bff;
-    margin-bottom: 20px;
+  color: #007bff;
+  margin-bottom: 20px;
 }
 
 .data-list table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
 }
 
 .data-list th,
 .data-list td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
 
 .data-list th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 .data-list tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 .data-list tr:hover {
-    background-color: #eef;
+  background-color: #eef;
 }
 
 .admin-section input[type="text"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .admin-section button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9em;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
 }
 
 .admin-section button:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
 
 /* Footer */
 .footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
 /* Fade-in effect for sections */
 .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -1,122 +1,164 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - P2P Transport</title>
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
-<body>
-  <div class="background-slideshow">
-    <img src="images/image1.jpg" class="active" alt="Background 1">
-    <img src="images/image2.jpg" alt="Background 2">
-    <img src="images/image3.jpg" alt="Background 3">
-    <img src="images/image4.jpg" alt="Background 4">
-    <img src="images/image5.jpg" alt="Background 5">
-    <img src="images/image6.jpg" alt="Background 6">
-    <img src="images/image7.jpg" alt="Background 7">
-  </div>
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toastContainer"></div>
-  <!-- Floating Help Button -->
-  <button class="help-btn" id="helpBtn" title="Help & Support">
-    <span class="material-icons">help_outline</span>
-  </button>
-  <!-- Help Modal -->
-  <div class="help-modal" id="helpModal">
-    <div class="help-modal-content">
-      <span class="close" id="closeHelp">&times;</span>
-      <h2>Help & Support</h2>
-      <h3>Frequently Asked Questions</h3>
-      <ul class="faq-list">
-        <li><strong>How do I register?</strong><br>Fill in your details and click Register.</li>
-        <li><strong>Already have an account?</strong><br>Click Login to access your account.</li>
-      </ul>
-      <h3>Contact Us</h3>
-      <form class="help-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea placeholder="How can we help you?" required></textarea>
-        <button type="submit" class="btn">Send Message</button>
-      </form>
-      <div class="help-success" style="display:none; color:green; margin-top:1rem;">Thank you! We'll get back to you soon.</div>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - P2P Transport</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="background-slideshow">
+      <img src="images/image1.jpg" class="active" alt="Background 1" />
+      <img src="images/image2.jpg" alt="Background 2" />
+      <img src="images/image3.jpg" alt="Background 3" />
+      <img src="images/image4.jpg" alt="Background 4" />
+      <img src="images/image5.jpg" alt="Background 5" />
+      <img src="images/image6.jpg" alt="Background 6" />
+      <img src="images/image7.jpg" alt="Background 7" />
     </div>
-  </div>
-  <header class="navbar">
-    <div class="logo">P2P Transport</div>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    <!-- Floating Help Button -->
+    <button class="help-btn" id="helpBtn" title="Help & Support">
+      <span class="material-icons">help_outline</span>
     </button>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="index.html"><span class="material-icons">home</span><span>Home</span></a></li>
-        <li><a href="login.html"><span class="material-icons">login</span><span>Login</span></a></li>
-        <li><a href="profile.html"><span class="material-icons">person</span><span>Profile</span></a></li>
-      </ul>
-    </nav>
-  </header>
-  <main class="form-container fade-in">
-    <h2>Create an Account</h2>
-    <form id="registerForm" class="form">
-      <label for="firstname">First Name:</label>
-      <input type="text" id="firstname" name="firstname" required />
-      <label for="lastname">Last Name:</label>
-      <input type="text" id="lastname" name="lastname" required />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required minlength="8" />
-      <label for="confirm-password">Confirm Password:</label>
-      <input type="password" id="confirm-password" name="confirm_password" required />
-      <button type="submit" class="btn">Register</button>
-    </form>
-    <p class="form-footer">
-      Already have an account? <a href="login.html">Login here</a>
-    </p>
-  </main>
-  <footer class="footer fade-in">
-    <p>&copy; 2025 P2P Transport. All rights reserved.</p>
-  </footer>
-  <script src="js/common.js"></script>
-  <script>
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
+    <!-- Help Modal -->
+    <div class="help-modal" id="helpModal">
+      <div class="help-modal-content">
+        <span class="close" id="closeHelp">&times;</span>
+        <h2>Help & Support</h2>
+        <h3>Frequently Asked Questions</h3>
+        <ul class="faq-list">
+          <li>
+            <strong>How do I register?</strong><br />Fill in your details and
+            click Register.
+          </li>
+          <li>
+            <strong>Already have an account?</strong><br />Click Login to access
+            your account.
+          </li>
+        </ul>
+        <h3>Contact Us</h3>
+        <form class="help-form">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="How can we help you?" required></textarea>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+        <div class="help-success">Thank you! We'll get back to you soon.</div>
+      </div>
+    </div>
+    <header class="navbar">
+      <div class="logo">P2P Transport</div>
+      <button
+        class="hamburger"
+        id="hamburgerBtn"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html"
+              ><span class="material-icons">home</span><span>Home</span></a
+            >
+          </li>
+          <li>
+            <a href="login.html"
+              ><span class="material-icons">login</span><span>Login</span></a
+            >
+          </li>
+          <li>
+            <a href="profile.html"
+              ><span class="material-icons">person</span><span>Profile</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main class="form-container fade-in">
+      <h2>Create an Account</h2>
+      <form id="registerForm" class="form">
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required />
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required />
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          minlength="8"
+        />
+        <label for="confirm-password">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirm-password"
+          name="confirm_password"
+          required
+        />
+        <button type="submit" class="btn">Register</button>
+      </form>
+      <p class="form-footer">
+        Already have an account? <a href="login.html">Login here</a>
+      </p>
+    </main>
+    <footer class="footer fade-in">
+      <p>&copy; 2025 P2P Transport. All rights reserved.</p>
+    </footer>
+    <script src="js/common.js"></script>
+    <script>
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirm-password").value;
 
-        if (password !== confirmPassword) {
-            showToast('Passwords do not match.');
+          if (password !== confirmPassword) {
+            showToast("Passwords do not match.");
             return;
-        }
+          }
 
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-        delete data.confirm_password; // Don't send confirm_password to the server
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+          delete data.confirm_password; // Don't send confirm_password to the server
 
-        fetch('../backend/register.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                showToast('Registration successful! Please log in.');
-                setTimeout(() => window.location.href = 'login.html', 1500);
-            } else {
+          fetch("../backend/register.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.success) {
+                showToast("Registration successful! Please log in.");
+                setTimeout(() => (window.location.href = "login.html"), 1500);
+              } else {
                 showToast(result.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast('An error occurred. Please try again.');
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              showToast("An error occurred. Please try again.");
+            });
         });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
